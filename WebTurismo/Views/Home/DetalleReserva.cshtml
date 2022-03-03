@@ -1,0 +1,329 @@
+﻿@using EntidadServicio
+@{
+    ViewBag.Title = "DetalleReserva";
+}
+@{
+    AvUsuario usuario = (AvUsuario)Session["AVUsuario"];
+
+    bool isLogin = usuario != null;
+    List<Departamento> dpto = (List<Departamento>)ViewData["Propiedad"];
+    
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .img-cart {
+        display: block;
+        max-width: 50px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table tr td {
+        border: 1px solid #FFFFFF;
+    }
+
+    table tr th {
+        background: #eee;
+    }
+</style>
+<script>
+
+    $(document).ready(function () {
+
+        var config = {
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy'
+        };
+        $("#fecha_llegada").datepicker(config).datepicker('setDate', new Date()).datepicker("option","minDate", new Date());
+        $("#fecha_salida").datepicker(config).datepicker('setDate', new Date()).datepicker("option", "minDate", new Date());
+
+
+
+        $(function () {
+
+            var dateFormat = "dd-mm-yyyy",
+                from = $("#fecha_llegada")
+                    .datepicker({
+                        defaultDate: "+3d",
+                        changeMonth: true,
+                        numberOfMonths: 3,
+                        locale: "es-es"
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                        wt.pago.updateExtra();
+                        calcularValor();
+                        
+                    }),
+                to = $("#fecha_salida").datepicker({
+                    defaultDate: "+1m",
+                    changeMonth: true,
+                    numberOfMonths: 3,
+                    locale: "es-es"
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                        wt.pago.updateExtra();
+                        calcularValor();
+                        
+                    });
+
+            
+        });
+
+    })
+
+    function getDate(element) {
+        var date;
+        try {
+            date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
+            date = null;
+        }
+
+        return date;
+    }
+
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    function dateDiffInDays(a, b) {
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
+
+
+
+    function calcularValor() {
+        var total = 0;
+        var dif = 0;
+        var valor = 0;
+        
+        var arriendo = $("#valorDiario").val();
+        var fecha1 = $("#fecha_llegada").datepicker('getDate');
+        var valorTotalDias = 0;
+        var totalRestante = 0;
+        var extra = parseInt(document.getElementById("valorExtras").value);
+        if (extra === "NaN" || extra === "" || extra === null) {
+            document.getElementById("valorExtras").value = 0;
+        }
+        var fecha1Date = getDate('mm/dd/yy', fecha1);
+        
+
+        var fecha2 = $("#fecha_salida").datepicker('getDate');
+        var fecha2Date = getDate('mm/dd/yy', fecha2);
+
+        if ((fecha1 !== '' && fecha2 !== '') || (fecha1 !== fecha2)) {
+            
+
+            
+            //arriendo = 0;
+
+            dif = parseInt((fecha2 - fecha1) / _MS_PER_DAY);
+            
+            valor = arriendo ;
+            total = ((valor * dif) * 0.4) * 1000;
+            totalRestante = ((valor * dif) * 0.6) * 1000 ;
+            valorTotalDias = (valor * dif) * 1000;
+
+            if (extra !== "NaN" || extra !== "" || extra !== null || extra !== 0) {
+                document.getElementById("valorTotalDias").value = (valorTotalDias + extra);
+                document.getElementById("valorRestante").value = (totalRestante + extra);
+
+                document.getElementById("valorReserva").value = (total + extra);
+            } else {
+                document.getElementById("valorTotalDias").value = valorTotalDias;
+                document.getElementById("valorRestante").value = totalRestante;
+
+                document.getElementById("valorReserva").value = total;
+            }
+            
+            
+        }
+    }
+</script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Detalle Reserva</li>
+        </ul>
+    </div>
+</section>
+
+
+
+
+<section class="w3l-contact-7 pt-5" id="contact">
+    
+        <div class="container">
+            <div class="row map-content-9">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+
+
+                        <div class="panel panel-info panel-shadow">
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Departamento</th>
+                                                <th>Descripción</th>
+                                                <th>Datos</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><img src="@Url.Action("Preview", "Imagen", new { file = dpto[0].portada,  contentType = (string.IsNullOrEmpty(dpto[0].content_portada) ? "": dpto[0].content_portada) })" class="img-cart"></td>
+                                                <td><strong>Ubicación</strong></td>
+                                                <td>
+                                                    <form class="input-group date">
+                                                        <input type="text" id="ubicacion" value="@dpto[0].direccion" name="ubicacion" disabled>
+
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>Fecha Llegada</strong></td>
+                                                <td>
+
+                                                    <input type="text" id="fecha_llegada" name="Indique Fecha Llegada">
+
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>Fecha Salida</strong></td>
+                                                <td>
+
+                                                    <input type="text" id="fecha_salida" name="Indique Fecha Salida">
+
+
+                                                </td>
+
+                                            </tr>
+
+
+                                            <tr>
+                                                <td colspan="4" class="text-right">Valor Arriendo Diario $</td>
+                                                <td><input id="valorDiario" value="@dpto[0].valor_arriendo.ToString("N0")" disabled /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right">Valor Total Días $</td>
+                                                <td><input id="valorTotalDias" disabled /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right">Valor Servicios extras $</td>
+                                                <td><input id="valorExtras" disabled /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right">Valor Restante a pagar (%60) $</td>
+                                                <td><input id="valorRestante" disabled /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right"><strong>Valor total a pagar reserva (%40) $</strong></td>
+                                                <td><input id="valorReserva" type="text" disabled></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---Partial View acompañante-->
+                        <div id="vistaAcompanante" class="panel-body">
+                            <div class="block-header">
+                                <div class="row mb-3">
+                                    <div class="col-md-6"><h4 class="block-title">Acompañante</h4></div>
+                                    <div class="col-md-6 text-right">
+
+                                        <button class="btn btn-danger btn-rounded mr-3" onclick="wt.pago.QuitarUltimoAcompanante()">
+                                            <span class="material-icons">Eliminar Último</span>
+                                        </button>
+
+                                        <button class="btn btn-success btn-rounded" onclick="wt.pago.acompanante()">
+                                            <span class="material-icons">Agregar Acompañante</span>
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div id="vistaAcompananteRelleno">
+
+                            </div>
+
+                        </div>
+
+                        <!---Partial View ServicioExtra-->
+                        <div id="vistaServicio" class="panel-body">
+                            <div class="block-header">
+                                <div class="row mb-3">
+                                    <div class="col-md-6"><h4 class="block-title">Servicio Extra</h4></div>
+                                    <div class="col-md-6 text-right">
+
+                                        <button class="btn btn-danger btn-rounded mr-3" onclick="wt.pago.QuitarUltimoServicio()">
+                                            <span class="material-icons">Eliminar Último</span>
+                                        </button>
+
+                                        <button class="btn btn-success btn-rounded" onclick="wt.pago.Servicio()">
+                                            <span class="material-icons">Agregar Servicio Extra</span>
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div id="vistaServicioRelleno">
+
+                            </div>
+
+                        </div>
+
+                        <a href="#" class="btn btn-success" onclick="wt.buscar.redireccionarPropiedad(@dpto[0].id)">&nbsp;Volver</a>
+                        <a href="#" class="btn btn-primary pull-right" onclick="wt.pago.redireccionarPago(@dpto[0].id, '@usuario.RUT.ToString()')">Pagar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</section>
+

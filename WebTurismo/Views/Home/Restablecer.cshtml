@@ -1,0 +1,72 @@
+﻿
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            @if (ViewData["contenidoMensaje"] != null) {
+            <text>
+            $(document).ready(function () {
+                alertify.success("Contraseña actualizada correctamente.");
+
+            });
+            </text>
+        }
+
+        });
+</script>
+
+
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Restablecer</li>
+        </ul>
+    </div>
+</section>
+<!-- ================= IN Recuperar Contraseña================= -->
+<section class="midd-w3 py-5">
+    <div class="container py-lg-5 py-md-4 py-2">
+
+        <div class="row ">
+
+            <div class="col-lg-7 pl-lg-0">
+                <div class="contacts-9 pt-lg-5 pt-md-4">
+                    <section class="pt-3 pb-3">
+
+                        <h2 class="ipt-title mb-3 font-28 ">Restablecer Contraseña</h2>
+
+                        <div class="form-submit">
+                            <form id="formulario" method="POST">
+                                <input type="hidden" id="id" name="id" value="@ViewData["Id"]" />
+                                <div class="submit-section">
+                                    <div class="form-group text-left">
+                                        <label for="pass">Ingresa la Nueva Contraseña:</label>
+                                        <input type="password" maxlength="10" class="form-control" id="pass" name="pass" required>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <label for="pass2">Repita la Contraseña:</label>
+                                        <input type="password" maxlength="10" class="form-control" id="pass2" name="pass2" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-rounded mt-3" id="btnIngresar">Restablecer Contraseña</button>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- =================  END Recuperar Contraseña ================= -->

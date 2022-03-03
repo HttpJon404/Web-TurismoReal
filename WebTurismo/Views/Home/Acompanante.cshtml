@@ -1,0 +1,51 @@
+﻿
+@{
+
+
+    var id = (int)ViewData["id"];
+
+
+}
+
+
+<div class="block-wrap" id="acompanante-@id">
+    <div class="block-header">
+        <h4 class="block-title">Acompanañante @id</h4>
+    </div>
+
+    <div class="block-body">
+        <div class="submit-section">
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rut</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Celular</th>
+                        </tr>
+
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" onkeyup="wt.pago.FormatRut(this)" id="txtRutAcompanante-@id" maxlength="10"></td>
+                            <td><input type="text" id="txtNombreAcompanante-@id" /></td>
+                            <td><input type="text" id="txtApellidoAcompanante-@id"/></td>
+                            <td><input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="txtCelularAcompanante-@id" maxlength="9" /></td>
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

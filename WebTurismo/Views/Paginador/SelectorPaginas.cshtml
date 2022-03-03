@@ -1,0 +1,32 @@
+﻿
+@{
+    int paginaActual = (int)ViewData["PaginaActual"];
+    int cantidadPaginas = (int)ViewData["CantidadPaginas"];
+    String onclick = (String)ViewData["Onclick"];
+    int delta = 1;
+    int inicio = (paginaActual - delta > 1) ? paginaActual - delta : 1;
+    int termino = (paginaActual + delta < cantidadPaginas) ? delta + paginaActual : cantidadPaginas;
+
+}
+<div class="paginas  mt-3">  
+    <ul class="pagination">
+
+        <li class="page-item "><a class="page-link" href="#" onclick="@(onclick)(1) "><<</a></li>
+
+        @for (int i = inicio; i <= termino; i++)
+        {
+            String divAtrrs = (paginaActual == i) ? "class=pagina-seleccionada active id=pagina-seleccionada" : ("onclick=" + onclick + "(" + i + ")");
+
+
+            <li class="page-item "><a class="page-link" href="#" @divAtrrs>@i</a></li>
+
+        }
+        
+
+        <li class="page-item"><a class="page-link" href="#" onclick="@(onclick)(@cantidadPaginas)">>></a></li>
+
+    </ul>
+
+</div>
+
+

@@ -1,0 +1,350 @@
+﻿@using EntidadServicio
+@using System.Configuration
+@{ 
+    var usuario = (AvUsuario)ViewData["usuario"];
+    List<DetalleReserva> res = (List<DetalleReserva>)ViewData["reserva"];
+
+
+}
+
+
+
+
+<style>
+    .img-cart {
+        display: block;
+        max-width: 50px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ui-w-80 {
+        width: 80px !important;
+        height: auto;
+    }
+
+    .btn-default {
+        border-color: rgba(24,28,33,0.1);
+        background: rgba(0,0,0,0);
+        color: #4E5155;
+    }
+
+    label.btn {
+        margin-bottom: 0;
+    }
+
+    .btn-outline-primary {
+        border-color: #26B4FF;
+        background: transparent;
+        color: #26B4FF;
+    }
+
+    .btn {
+        cursor: pointer;
+    }
+
+    .text-light {
+        color: #babbbc !important;
+    }
+
+    .btn-facebook {
+        border-color: rgba(0,0,0,0);
+        background: #3B5998;
+        color: #fff;
+    }
+
+    .btn-instagram {
+        border-color: rgba(0,0,0,0);
+        background: #000;
+        color: #fff;
+    }
+
+    .card {
+        background-clip: padding-box;
+        box-shadow: 0 1px 4px rgba(24,28,33,0.012);
+    }
+
+    .row-bordered {
+        overflow: hidden;
+    }
+
+    .account-settings-fileinput {
+        position: absolute;
+        visibility: hidden;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .account-settings-links .list-group-item.active {
+        font-weight: bold !important;
+    }
+
+    html:not(.dark-style) .account-settings-links .list-group-item.active {
+        background: transparent !important;
+    }
+
+    .account-settings-multiselect ~ .select2-container {
+        width: 100% !important;
+    }
+
+    .light-style .account-settings-links .list-group-item {
+        padding: 0.85rem 1.5rem;
+        border-color: rgba(24, 28, 33, 0.03) !important;
+    }
+
+        .light-style .account-settings-links .list-group-item.active {
+            color: #4e5155 !important;
+        }
+
+    .material-style .account-settings-links .list-group-item {
+        padding: 0.85rem 1.5rem;
+        border-color: rgba(24, 28, 33, 0.03) !important;
+    }
+
+        .material-style .account-settings-links .list-group-item.active {
+            color: #4e5155 !important;
+        }
+
+    .dark-style .account-settings-links .list-group-item {
+        padding: 0.85rem 1.5rem;
+        border-color: rgba(255, 255, 255, 0.03) !important;
+    }
+
+        .dark-style .account-settings-links .list-group-item.active {
+            color: #fff !important;
+        }
+
+    .light-style .account-settings-links .list-group-item.active {
+        color: #4E5155 !important;
+    }
+
+    .light-style .account-settings-links .list-group-item {
+        padding: 0.85rem 1.5rem;
+        border-color: rgba(24,28,33,0.03) !important;
+    }
+</style>
+
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Mi Perfil</li>
+        </ul>
+    </div>
+</section>
+<section class="w3l-index3">
+    <div class="container light-style flex-grow-1 container-p-y">
+
+        <h4 class="font-weight-bold py-3 mb-4">
+            Detalle Perfil
+        </h4>
+
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+                        @*<a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Cambiar Contraseña</a>*@
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-reserva">Mis Reservas</a>
+                        @*<a class="list-group-item list-group-item-action" data-toggle="list" href="#account-pagos">Mis Pagos</a>*@
+
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-general">
+
+
+                            <hr class="border-light m-0">
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label class="form-label">Nombres</label>
+                                    <input type="text" class="form-control" id="nombrePerfil" disabled value="@usuario.NOMBRES @usuario.APELLIDOS">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Correo</label>
+                                    <input type="text" class="form-control mb-1" id="correoPerfil" disabled value="@usuario.CORREO">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--<div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">-->
+
+                                @*<div class="form-group">
+                                    <label class="form-label">Contraseña Actual</label>
+                                    <input type="password" id="contraseñaAntigua" class="form-control">
+                                </div>*@
+
+                                <!--<div class="form-group">
+                                    <label class="form-label">Nueva contraseña</label>
+                                    <input type="password" id="contraseña1" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Repetir contraseña</label>
+                                    <input type="password" id="contraseña2" class="form-control">
+                                </div>
+
+                            </div>
+                        </div>-->
+                        <div class="tab-pane fade" id="account-reserva">
+
+
+                            <!---- ACA IRAN LOS LISTADOS HISTORICOS DE RESERVAS-->
+
+                            <div class="container">
+                                <div class="row map-content-9">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+
+
+                                            <div class="panel panel-info panel-shadow">
+
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        @if (res == null)
+                                                        {
+                                                            <p>Usted no posee reservas actualmente</p>
+                                                        }
+                                                        else if (!usuario.TieneRol(2))
+                                                        {
+                                                            <p>Usted posee un rol que es distinto a Cliente, para acceder a sus funcionalidades acceda a la app de escritorio</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            foreach (var detalle in res.OrderBy(x => x.id_estado))
+                                                            {
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id Dpto</th>
+                                                                <th>Departamento</th>
+                                                                <th>Estado</th>
+
+                                                                <th>Valor Reserva</th>
+                                                                <th>Valor Restante</th>
+                                                                <th>Valor Total</th>
+                                                                @if (Convert.ToInt32(detalle.multa) != 0)
+                                                                {
+                                                            <th>Multa</th>}
+                                                                <th>Ver Detalle</th>
+
+                                                                @if (Convert.ToInt32(detalle.id_estado) == 5)
+                                                                {
+                                                            <th>Cancelar</th>
+}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>@detalle.id_dpto </td>
+                                                                <td>
+                                                                    <img  src="@Url.Action("Preview", "Imagen", new { file = detalle.portada, contentType = (string.IsNullOrEmpty(detalle.content_portada) ? "" : detalle.content_portada) })" class="img-cart">
+                                                                </td>
+                                                                @if (Convert.ToInt32(detalle.id_estado) == 5)
+                                                                {
+
+                                                            <td>Reservado</td>
+ }
+                                                        else if (Convert.ToInt32(detalle.id_estado) == 6)
+                                                        {
+                                                            <td>Check - In</td> }
+                                                                                else if (Convert.ToInt32(detalle.id_estado) == 7)
+                                                                                {
+
+
+                                                            <td>Pendiente de pago Check-out</td>
+ }
+                                                        else if (Convert.ToInt32(detalle.id_estado) == 9)
+                                                        {
+
+
+                                                            <td>Cancelada</td>
+ }
+                                                        else
+                                                        {
+                                                            <td>Termino de estadia</td>
+}
+                                                                <td>
+                                                                    @detalle.valor_reserva.ToString("N0")
+                                                                </td>
+                                                                <td>
+                                                                    @detalle.valor_restante.ToString("N0")
+                                                                </td>
+                                                                <td> @detalle.valor_total.ToString("N0")</td>
+                                                                @if (Convert.ToInt32(detalle.multa) != 0)
+                                                                {
+                                                                <td>@detalle.multa.ToString("N0") </td>
+                                                                }
+                                                                <td><a href="#" class="btn btn-success" onclick="wt.login.DetalleReserva(@detalle.id);">&nbsp;Detalle</a></td>
+                                                                @if (Convert.ToInt32(detalle.id_estado) == 5)
+                                                                {
+                                                            <td><a href="#" class="btn btn-warning" onclick="wt.pago.cancelarReserva(@detalle.id);">&nbsp;Cancelar</a></td>
+ }
+                                                        else if (Convert.ToInt32(detalle.id_estado) == 7)
+                                                        {
+                                                           <td><button  class="btn btn-warning" onclick="wt.pago.redireccionarPagoRestante('@detalle.id', '@detalle.multa', '@detalle.valor_restante', '@detalle.valor_restante')">Pagar</button></td>}
+                                                            </tr>
+
+
+
+
+                                                        </tbody>
+                                                    </table>}
+                                                                }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*onclick="wt.buscar.redireccionarPropiedad(@dpto[0].id)"*@
+                                            @*<a href="#" class="btn btn-success">&nbsp;Volver</a>*@
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--<div class="tab-pane fade" id="account-pagos">-->
+
+
+                            <!---ACA EL HISTORICO DE PAGOS-->
+
+                        <!--</div>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right mt-3">
+            @*<button type="button" class="btn btn-primary" onclick="wt.login.cambiarContraseñaPerfil(@usuario.ID)">Guardar Cambios</button>&nbsp;*@
+            @*<button type="button" class="btn btn-default">Cancelar</button>*@
+        </div>
+
+    </div>
+
+</section>

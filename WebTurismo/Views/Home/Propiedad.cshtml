@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.title = "Propiedad";
+}
+@using EntidadServicio
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    AvUsuario usuario = (AvUsuario)Session["AVUsuario"];
+
+    bool isLogin = usuario != null;
+    List<Departamento> dpto = (List<Departamento>)ViewData["Propiedad"];
+
+
+    var res = ViewData["reserva"].ToString();
+    List<Departamento> departamentos = (List<Departamento>)ViewData["departamentos"];
+
+    int id = Convert.ToInt32(ViewData["id"]);
+    var rnd = new Random();
+
+
+
+
+
+}
+
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index","Home")">Inicio</a></li>
+
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Propiedad</li>
+        </ul>
+    </div>
+</section>
+
+@foreach (var i in dpto)
+{
+
+
+<section class="w3l-blog post-content py-5">
+        <div class="container py-lg-4 py-md-3 py-2">
+            <div class="inner mb-4">
+                <ul class="blog-single-author-date align-items-center">
+                    <li>
+                        @if (Convert.ToInt32(dpto[0].id_estado) == 5 || Convert.ToInt32(dpto[0].id_estado) == 6 || Convert.ToInt32(dpto[0].id_estado) == 7)
+                        {
+
+
+                         <div class="listing-category"><span>Arrendado</span></div>
+
+                }
+                else
+                {
+                    <div class="listing-category"><span>Arrendar</span></div>
+                }
+                    </li>
+                    <li><span class="fa fa-clock-o"></span> Publicada el @i.fecha_creacion.ToString("dddd, dd MMMM yyyy")</li>
+
+                </ul>
+            </div>
+            <div class="post-content">
+                <h2 class="title-single"> @i.direccion</h2>
+            </div>
+            <div class="blo-singl mb-4">
+                <ul class="blog-single-author-date align-items-center">
+                    <li>
+                        <p>@i.nombre_region - @i.nombre_comuna</p>
+                    </li>
+                    @if (i.dormitorios > 1)
+                    {
+                        <li><span class="fa fa-bed"></span> @i.dormitorios.ToString("N0") Piezas</li>
+
+                    }
+                    else
+                    {
+                        <li><span class="fa fa-bed"></span> @i.dormitorios.ToString("N0") Pieza</li>
+
+                    }
+                    @if (i.baños>1)
+                    {
+                        <li><span class="fa fa-bath"></span> @i.baños.ToString("N0") Baños</li>
+
+                    }
+                    else
+                    {
+                        <li><span class="fa fa-bath"></span> @i.baños.ToString("N0") Baño</li>
+
+                    }
+                    <li><span class="fa fa-share-square-o"></span> @i.metrosm2 mt2</li>
+                </ul>
+                @*<ul class="share-post">
+                    <a href="#url" class="cost-estate m-o">$200000</a>
+                </ul>*@
+            </div>
+            <div class="row">
+                <div class="col-lg-8 w3l-news">
+                    <div class="blog-single-post">
+                        <div class="single-post-image mb-5">
+                            <div class="owl-blog owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="card">
+                                        <img src="@Url.Action("Preview", "Imagen", new { file = i.portada,  contentType = (string.IsNullOrEmpty(i.content_portada) ? "": i.content_portada) })" class="img-fluid radius-image" alt="image">
+                                    </div>
+                                </div>
+                                @foreach (var d in i.ruta_archivo)
+                                {
+                                    <div class="item">
+                                        <div class="card">
+                                            <img src="@Url.Action("Preview", "Imagen", new { file = d,  contentType = "image/jpeg" })" class="img-fluid radius-image" alt="image">
+
+                                            @*<img src="../Content/assets/images/p2.jpg" class="img-fluid radius-image" alt="image">*@
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+
+                        <div class="single-post-content">
+                            <h3 class="post-content-title mb-3">Descripción</h3>
+                            <p class="mb-4">
+                                <!---Falta descripción dpto-->
+                            </p>
+
+                            <p>
+
+                                Condiciones de uso:
+
+                                @i.condiciones
+                            </p>
+
+                            <div class="single-bg-white">
+                                <h3 class="post-content-title mb-4">Detalle Propiedad</h3>
+                                <ul class="details-list">
+
+                                    <li><strong>Metros m2 :</strong> @i.metrosm2 mt </li>
+
+                                    <li><strong>Piezas :</strong> @i.dormitorios.ToString("N0") </li>
+                                    <li><strong>Camas :</strong> 5 </li>
+                                    <li><strong>Baños :</strong> @i.baños.ToString("N0") </li>
+                                    @if (i.id_estado == 1)
+                                    {
+                                        <li><strong>Estacionamiento :</strong> Sí </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><strong>Estacionamiento :</strong> No </li>
+
+                                    }
+                                    <li><strong>Precio :</strong> $ @i.valor_arriendo.ToString("N0") </li>
+                                    <li><strong>Estado :</strong> @i.nombre_estado</li>
+                                </ul>
+                            </div>
+                            <div class="single-bg-white">
+                                <h3 class="post-content-title mb-4">Incluye</h3>
+                                <ul class="details-list">
+                                    <li><strong>Tv Cable </strong></li>
+                                    <li><strong>Internet </strong> </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="single-bg-white">
+                            <h3 class="post-content-title mb-4">Ubicación</h3>
+                            <div class="agent-map">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2895687731!2d-74.26055986835598!3d40.697668402590374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1562582305883!5m2!1sen!2sin"
+                                        frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12 mt-lg-0 mt-5">
+                    <aside class="sidebar">
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Valor Arriendo: @i.valor_arriendo.ToString("N0")</h4>
+                            </div>
+                            @if (isLogin && !usuario.TieneRol(2))
+                            {
+                                <button onclick="wt.buscar.noEsCliente()" data - toggle="modal" data-target="#ModalRegistroLogin" type="submit" class="btn btn-primary btn-style w-100">Reservar</button>
+
+                            }
+                            else if (res == "Tiene" && isLogin)
+                            {
+                                <button onclick="wt.buscar.poseeReserva()" data - toggle="modal" data-target="#ModalRegistroLogin" type="submit" class="btn btn-primary btn-style w-100">Reservar</button>
+
+                            }
+                            else if (Convert.ToInt32(dpto[0].id_estado) == 5 || Convert.ToInt32(dpto[0].id_estado) == 6 || Convert.ToInt32(dpto[0].id_estado) == 7)
+                            {
+                                <a href="#" class="btn btn-primary btn-style w-100">Reservado</a>
+                            }
+                            else if (isLogin && Convert.ToInt32(dpto[0].id_estado) == 1)
+                            {
+                                <a href="#" class="btn btn-primary btn-style w-100" onclick="wt.buscar.redireccionarReserva(@i.id)">Reservar</a>
+
+
+
+                            }
+                            else
+                            {
+                                <button onclick="wt.login.AbrirLogin()" data - toggle="modal" data-target="#ModalRegistroLogin" type="submit" class="btn btn-primary btn-style w-100">Reservar</button>
+
+                            }
+                        </div>
+
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+                            <div class="sidebar-title">
+                                <h4>Otras propiedades</h4>
+                            </div>
+                            @foreach (var d in departamentos.Where(d => d.id != id).OrderBy(x => rnd.Next()).Take(3))
+                            {
+                                <article class="post">
+                                    <figure class="post-thumb">
+                                        <img src="@Url.Action("Preview", "Imagen", new { file = d.portada,  contentType = (string.IsNullOrEmpty(d.content_portada) ? "": d.content_portada) })" class="radius-image" alt="image">
+
+                                    </figure>
+                                    <div class="text">
+                                        <a href="#" onclick="wt.buscar.redireccionarPropiedad(@d.id)">
+                                            @d.nombre_region - @d.nombre_comuna - $@d.valor_arriendo.ToString("N0")
+                                        </a>
+
+                                    </div>
+                                </article>
+                            }
+
+
+
+
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}

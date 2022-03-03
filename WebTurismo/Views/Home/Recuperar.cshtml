@@ -1,0 +1,83 @@
+﻿@using System.Configuration
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            @if (ViewData["contenidoMensaje"] != null) {
+            <text>
+            $(document).ready(function () {
+
+
+                if ("@ViewData["tipoMensaje"]" == "success") {
+
+                    alertify.success("Se ha enviado un correo para restablecer su contraseña");
+                    setTimeout(function () {
+                    var url = wt.urlSitio + 'Home/Index';
+                    window.location = url;
+                     },4000)
+                } else {
+                    alertify.error('@ViewData["contenidoMensaje"]');
+
+                    }
+
+
+            });
+            </text>
+        }
+
+
+        });
+
+    </script>
+
+
+
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Reset Password</li>
+        </ul>
+    </div>
+</section>
+
+<section class="midd-w3 py-5">
+    <div class="container py-lg-5 py-md-4 py-2">
+
+        <div class="row ">
+
+            <div class="col-lg-7 pl-lg-0">
+                <div class="contacts-9 pt-lg-5 pt-md-4">
+                    <section class="pt-3 pb-3">
+                        <h2 class="ipt-title mb-5">Recuperar Contraseña</h2>
+                        <form id="formulario-recuperar" method="post">
+                            <div class="form-group text-left">
+                                <label for="email" class="font-bold ml-0">Ingresa tu Correo: </label>
+                                <input type="email" id="email" name="email" class="form-control mx-auto" placeholder="Correo Electronico" required="">
+                            </div>
+                            <button type="submit" id="btnIngresar" class="btn btn-primary btn-rounded">Recuperar Contraseña</button>
+
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+

@@ -1,0 +1,292 @@
+﻿@using EntidadServicio
+@model PaginadorGenerico<Departamento>
+@{
+    ViewBag.title = "Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    List<GetComunas> lstComunas = (List<GetComunas>)ViewData["Comunas"];
+    List<Departamento> lstDeptos = (List<Departamento>)ViewData["Propiedades"];
+    List<GetComunas> lstRegion = (List<GetComunas>)ViewData["Region"];
+}
+<script>
+
+    var RegionesYcomunas = {
+
+        "regiones": [{
+            "NombreRegion": "Arica y Parinacota",
+            "comunas": ["Arica", "Camarones", "Putre", "General Lagos"]
+        },
+        {
+            "NombreRegion": "Tarapacá",
+            "comunas": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"]
+        },
+        {
+            "NombreRegion": "Antofagasta",
+            "comunas": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"]
+        },
+        {
+            "NombreRegion": "Atacama",
+            "comunas": ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"]
+        },
+        {
+            "NombreRegion": "Coquimbo",
+            "comunas": ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"]
+        },
+        {
+            "NombreRegion": "Valparaíso",
+            "comunas": ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María", "Quilpué", "Limache", "Olmué", "Villa Alemana"]
+        },
+        {
+            "NombreRegion": "Región del Libertador Gral. Bernardo O’Higgins",
+            "comunas": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente", "Pichilemu", "La Estrella", "Litueche", "Marchihue", "Navidad", "Paredones", "San Fernando", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "Santa Cruz"]
+        },
+        {
+            "NombreRegion": "Región del Maule",
+            "comunas": ["Talca", "ConsVtución", "Curepto", "Empedrado", "Maule", "Pelarco", "Pencahue", "Río Claro", "San Clemente", "San Rafael", "Cauquenes", "Chanco", "Pelluhue", "Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén", "Linares", "Colbún", "Longaví", "Parral", "ReVro", "San Javier", "Villa Alegre", "Yerbas Buenas"]
+        },
+        {
+            "NombreRegion": "Región de Ñuble",
+            "comunas": ["Bulnes", "Chillán", "Chillán Viejo", "El Carmen", "Pemuco", "Pinto", "Quillón", "San Ignacio", "Yungay", "Cobquecura", "Coelemu", "Ninhue", "Portezuelo", "Quirihue", "Ránquil", "Treguaco", "San Carlos", "Coihueco", "San Nicolás", "Ñiquén", "San Fabián"]
+
+        },
+        {
+            "NombreRegion": "Región del Biobío",
+            "comunas": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé", "Hualpén", "Lebu", "Arauco", "Cañete", "Contulmo", "Curanilahue", "Los Álamos", "Tirúa", "Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel", "Alto Biobío"]
+        },
+        {
+            "NombreRegion": "Región de la Araucanía",
+            "comunas": ["Temuco", "Carahue", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Cholchol", "Angol", "Collipulli", "Curacautín", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria",]
+        },
+        {
+            "NombreRegion": "Región de Los Ríos",
+            "comunas": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli", "La Unión", "Futrono", "Lago Ranco", "Río Bueno"]
+        },
+        {
+            "NombreRegion": "Región de Los Lagos",
+            "comunas": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "FruVllar", "Los Muermos", "Llanquihue", "Maullín", "Puerto Varas", "Castro", "Ancud", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quellón", "Quemchi", "Quinchao", "Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo", "Chaitén", "Futaleufú", "Hualaihué", "Palena"]
+        },
+        {
+            "NombreRegion": "Región Aisén del Gral. Carlos Ibáñez del Campo",
+            "comunas": ["Coihaique", "Lago Verde", "Aisén", "Cisnes", "Guaitecas", "Cochrane", "O’Higgins", "Tortel", "Chile Chico", "Río Ibáñez"]
+        },
+        {
+            "NombreRegion": "Región de Magallanes y de la Antártica Chilena",
+            "comunas": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos (Ex Navarino)", "AntárVca", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
+        },
+        {
+            "NombreRegion": "Región Metropolitana de Santiago",
+            "comunas": ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central",
+                "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja",
+                "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado",
+                "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel",
+                "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón",
+                "Vitacura", "Puente Alto", "Pirque", "San José de Maipo", "Colina", "Lampa", "Tiltil", "San Bernardo", "Buin", "Calera de Tango", "Paine", "Melipilla", "Alhué", "Curacaví", "María Pinto", "San Pedro", "Talagante", "El Monte", "Isla de Maipo", "Padre Hurtado", "Peñaflor"]
+        }]
+    }
+
+
+    jQuery(document).ready(function () {
+
+        var iRegion = 0;
+        var htmlRegion = '<option value="sin-region">Seleccione región</option><option value="sin-region">--</option>';
+        var htmlComunas = '<option value="sin-region">Seleccione comuna</option><option value="sin-region">--</option>';
+
+        jQuery.each(RegionesYcomunas.regiones, function () {
+            htmlRegion = htmlRegion + '<option value="' + RegionesYcomunas.regiones[iRegion].NombreRegion + '">' + RegionesYcomunas.regiones[iRegion].NombreRegion + '</option>';
+            iRegion++;
+        });
+
+        jQuery('#regiones').html(htmlRegion);
+        jQuery('#comunas').html(htmlComunas);
+
+        jQuery('#regiones').change(function () {
+            var iRegiones = 0;
+            var valorRegion = jQuery(this).val();
+            var htmlComuna = '<option value="sin-comuna">Seleccione comuna</option><option value="sin-comuna">--</option>';
+            jQuery.each(RegionesYcomunas.regiones, function () {
+                if (RegionesYcomunas.regiones[iRegiones].NombreRegion == valorRegion) {
+                    var iComunas = 0;
+                    jQuery.each(RegionesYcomunas.regiones[iRegiones].comunas, function () {
+                        htmlComuna = htmlComuna + '<option value="' + RegionesYcomunas.regiones[iRegiones].comunas[iComunas] + '">' + RegionesYcomunas.regiones[iRegiones].comunas[iComunas] + '</option>';
+                        iComunas++;
+                    });
+                }
+                iRegiones++;
+            });
+            jQuery('#comunas').html(htmlComuna);
+        });
+        jQuery('#comunas').change(function () {
+            if (jQuery(this).val() == 'sin-region') {
+                alert('selecciones Región');
+            } else if (jQuery(this).val() == 'sin-comuna') {
+                alert('selecciones Comuna');
+            }
+        });
+        jQuery('#regiones').change(function () {
+            if (jQuery(this).val() == 'sin-region') {
+                alert('selecciones Región');
+            }
+        });
+
+    });
+</script>
+
+<section class="w3l-about-breadcrumb">
+    <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+        <div class="container pt-lg-5 py-3">
+        </div>
+    </div>
+</section>
+<section class="w3l-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumbs-custom-path">
+            <li><a href="@Url.Action("Index","Home")">Inicio</a></li>
+            <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Lista</li>
+        </ul>
+    </div>
+</section>
+
+<section class="locations-1" id="locations">
+    <div class="locations py-5">
+
+
+        <div class="container">
+            <div class="middle-section text-center">
+                <div class="section-width">
+                    @*<p>
+                            ¡Es genial estar en casa!
+                        </p>
+                        <h2>Encuentre una propiedad hoy</h2>
+                        <div class="most-searches">
+
+                        </div>*@
+                    <div class="w3l-cover-3-gd">
+                        <input type="search" name="text" id="searchDep" placeholder="Ingrese direccion">
+
+                        <span class="input-group-btn">
+                            <select id="regiones" class="btn btn-default" required name="ext">
+                                @*<option selected="">Region</option>
+                                    @foreach (var r in lstRegion)
+                                    {
+                                        <option value="@r.id_region">@r.nombre_region</option>
+
+
+                                    }*@
+                            </select>
+                        </span>
+                        <span class="input-group-btn">
+                            <select id="comunas" class="btn btn-default" required name="ext">
+                            </select>
+                        </span>
+                        <button class="btn-primary" onclick="wt.ubicacion.filtrarUbicacion();">Buscar</button>
+                    </div>
+                </div>
+                @*<section id="bottom" class="demo">
+                        <a href="#bottom"><span></span>Bajar</a>
+                    </section>*@
+            </div>
+        </div>
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="row">
+                @foreach (var i in Model.Resultado)
+                {
+                    <div class="col-lg-4 col-md-6 listing-img mt-5 pt-md-2">
+                        <a href="#" onclick="wt.buscar.redireccionarPropiedad(@i.id)">
+                            <div class="box16">
+                                <div class="rentext-listing-category"><span>@i.nombre_estado</span></div>
+                                <img class="img-fluid" src="@Url.Action("Preview", "Imagen", new { file = i.portada,  contentType = (string.IsNullOrEmpty(i.content_portada) ? "": i.content_portada) })" alt="">
+                                <div class="box-content">
+                                    <h3 class="title">$@i.valor_arriendo.ToString("N0")</h3>
+
+                                </div>
+                            </div>
+                        </a>
+                        <div class="listing-details blog-details align-self">
+                            <h4 class="user_title agent">
+                                <span>@i.nombre_region - @i.nombre_comuna</span>
+                            </h4>
+                            <p class="user_position">@i.direccion</p>
+                            <ul class="mt-3 estate-info">
+                                <li><span class="fa fa-bed"></span> @Convert.ToInt32(i.dormitorios)</li>
+                                <li><span class="fa fa-shower"></span> @Convert.ToInt32(i.baños)</li>
+                                <li><span class="fa fa-share-square-o"></span> @Convert.ToInt32(i.metrosm2) mt2</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                }
+
+
+
+            </div>
+
+            <!-- pagination -->
+            @*<div class="pagination-wrapper mt-5 pt-lg-3 text-center">
+                    <ul class="page-pagination">
+                        <li><span aria-current="page" class="page-numbers current">1</span></li>
+                        <li><a class="page-numbers" href="#url">2</a></li>
+                        <li><a class="page-numbers" href="#url">3</a></li>
+                        <li><a class="page-numbers" href="#url">...</a></li>
+                        <li><a class="page-numbers" href="#url">15</a></li>
+                        <li><a class="next" href="#url">Siguiente <span class="fa fa-angle-right"></span></a></li>
+                    </ul>
+                </div>*@
+            <!-- //pagination -->
+            @*CÓDIGO PARA EL PAGINADOR DE REGISTROS*@
+            <div class="pagination-wrapper mt-5 pt-lg-3 text-center">
+                @if (Model.Resultado.Count() > 0)
+                {
+                    <span>
+                        <strong>@Model.TotalRegistros</strong> registros encontrados
+                    </span>
+                    <span>&nbsp;|&nbsp;</span>
+                    <span>
+                        Página <strong>@(Model.PaginaActual)</strong> de
+                        <strong>@Model.TotalPaginas</strong>
+                    </span>
+                    <span>&nbsp;|&nbsp;</span>
+                }
+                else
+                {
+                    <span>No hay resultados para esta búsqueda</span>
+                    <span>&nbsp;|&nbsp;</span>
+                }
+
+                @if (Model.PaginaActual > 1)
+                {
+                    @Html.ActionLink("<<", "Listado", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                    <span></span>
+                    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("<<", "Listado", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                    <span></span>
+                    @Html.ActionLink("Anterior", "Listado", new { pagina = 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                }
+                <span></span>
+                @if (Model.PaginaActual < Model.TotalPaginas)
+                {
+                    @Html.ActionLink("Siguiente", "Listado", new { pagina = Model.PaginaActual + 1 },
+                                    new { @class = "btn btn-sm btn-default" })
+                    <span></span>
+                    @Html.ActionLink(">>", "Listado", new { pagina = Model.TotalPaginas },
+                                    new { @class = "btn btn-sm btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Siguiente", "Listado", new { pagina = Model.TotalPaginas - 1 },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                    <span></span>
+                    @Html.ActionLink(">>", "Listado", new { pagina = Model.TotalPaginas },
+                                    new { @class = "btn btn-sm btn-default disabled" })
+                }
+            </div>
+        </div>
+</section>

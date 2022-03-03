@@ -1,0 +1,74 @@
+﻿@using EntidadServicio
+@{
+
+
+    var id = (int)ViewData["id"];
+    List<Servicios> serv = (List<Servicios>)ViewData["Servicios"];
+    
+
+}
+
+<script>
+    function updateInput(ish) {
+
+        var value = parseInt(ish);
+        if (value === 1) {
+            ish = 30000;
+        } else if (value === 2) {
+            ish = 20000;
+        }
+        document.getElementById("txtValorExtra-" + @id).value = ish;
+        
+
+    }
+</script>
+
+<div class="block-wrap" id="servicio-@id">
+    <div class="block-header">
+        <h4 class="block-title">Servicio Extra @id</h4>
+    </div>
+
+    <div class="block-body">
+        <div class="submit-section">
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Tipo Servicio</th>
+                            <th>Valor</th>
+                            
+                        </tr>
+
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                                <td>
+                                    <select id="cmbIdExtra-@id" onchange="updateInput(this.value); wt.pago.updateExtra(this.value); calcularValor()" onclick="updateInput(this.value); wt.pago.updateExtra(this.value); calcularValor()" class="form-control">
+                                        @foreach (var ts in serv.Where(s => s.id != 999))
+                                        {
+                                            <option value="@ts.id" >@Convert.ToInt32(ts.id) - @ts.descripcion</option>   
+
+                                        }
+                                        
+                                        </select>                             
+                                </td>
+                                <td><input type="text" id="txtValorExtra-@id"  disabled/></td>
+                                
+                            </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

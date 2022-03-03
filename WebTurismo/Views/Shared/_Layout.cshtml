@@ -1,0 +1,612 @@
+﻿
+@using EntidadServicio
+@using System.Configuration
+@{ 
+    AvUsuario usuario = (AvUsuario)Session["AVUsuario"];
+
+    bool isLogin = usuario != null;
+
+    
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Turismo Real - Inicio : Allwebcode</title>
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+    @Styles.Render("~/Content/Web")
+
+    
+    
+
+
+
+</head>  <!--header-->
+<body>
+    @Scripts.Render("~/bundles/web")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            wt.urlSitio = '@Url.Content("~/")';
+        });
+
+    </script>
+    <section>
+
+
+        @RenderBody()
+
+
+    </section>
+
+    <header id="site-header" class="fixed-top">
+
+        <div class="container">
+            <nav class="navbar navbar-expand-lg stroke px-0">
+                <h1>
+                    <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                        <span class="fa fa-home"></span> Turismo Real
+                    </a>
+                </h1>
+                <!-- if logo is image enable this
+            <a class="navbar-brand" href="#index.html">
+                <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+            </a> -->
+                <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse"
+                        data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                    <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav ml-lg-5 mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="@Url.Action("Index","Home")">Inicio <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="@Url.Action("Listado","Home")">Propiedades</a>
+                        </li>
+                        @*<li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Propiedad <span class="fa fa-angle-down"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item " href="@Url.Action("Propiedad","Home")">Propiedad</a>
+                            </div>
+                        </li>*@
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Contacto <span class="fa fa-angle-down"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item " href="@Url.Action("About","Home")">Quiénes Somos</a>
+                                <a class="dropdown-item" href="@Url.Action("Contact","Home")">Contactanos</a>
+                            </div>
+                        </li>
+                    </ul>
+                    @if (isLogin)
+                    {
+
+
+
+        <ul class="navbar-nav mt-lg-0 ">
+            <li class="nav-item dropdown ">
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Mi Perfil<span class="fa fa-user"> </span>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item " href="@Url.Action("MiPerfilDetalle","Account")">Detalle Perfil</a>
+                    <a class="dropdown-item " href="@Url.Action("Index","Home")" onclick="wt.logout.LogoutUsuario();">Cerrar Sesión</a>
+                </div>
+            </li>
+        </ul> }
+    else
+    {
+
+    <div class="top-quote mt-lg-0">
+        <a href="#" onclick="wt.login.AbrirLogin()" data-toggle="modal" data-target="#ModalRegistroLogin" class="btn btn-style btn-primary">
+            <span class="fa fa-user"> Ingresar</span>
+        </a>
+    </div>}
+
+
+                    <!--/search-right-->
+                    <div class="search mx-3">
+                        @*<input class="search_box" type="checkbox" id="search_box">
+                        <label class="fa fa-search" for="search_box"></label>
+                        <div class="search_form">
+                            <form action="error.html" method="GET">
+                                <input type="text" placeholder="Buscar"><input type="submit" value="search">
+                            </form>
+                        </div>*@
+                    </div>
+                    <!--//search-right-->
+                </div>
+
+                <!-- toggle switch for light and dark theme -->
+                <div class="mobile-position">
+                    <nav class="navigation">
+                        <div class="theme-switch-wrapper">
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox">
+                                <div class="mode-container">
+                                    <i class="gg-sun" onclick=""></i>
+                                    <i class="gg-moon"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </nav>
+                </div>
+                <!-- //toggle switch for light and dark theme -->
+            </nav>
+        </div>
+    </header>
+    <!--/header-->
+    <!-- footers 20 -->
+    <section class="w3l-footers-20">
+        <div class="footers20">
+            <div class="container">
+                <div class="footers20-content">
+                    <div class="d-grid grid-col-4 grids-content">
+                        <div class="column">
+                            <a href="#url" class="link"><span class="fa fa-comments"></span></a>
+                            <a href="#url" class="title-small">consulta gratis</a>
+                            <h4>Programe una consulta gratuita con nuestro especialista.</h4>
+                            <a href="#" class="btn btn-style btn-primary">
+                                Programar ahora
+                                <span class="fa fa-long-arrow-right ml-2"></span>
+                            </a>
+                        </div>
+                        <div class="column">
+                            <a href="#url" class="link"><span class="fa fa-phone"></span></a>
+                            <a href="#url" class="title-small">Mesa de ayuda</a>
+                            <h4>¿Tienes preguntas o quieres más información? Llama ahora</h4>
+                            <a href="#">
+                                <p class="contact-phone mt-2">
+                                    <span class="lnr lnr-phone-handset"></span> +569 1234 5678
+                                </p>
+                            </a>
+                        </div>
+                        <div class="column mt-lg-0 mt-md-5">
+                            <h4 class="mb-1">
+                                Regístrese para recibir noticias
+                            </h4>
+                            <p>
+                                y obtenga las últimas noticias y actualizaciones
+                            </p>
+                            <form action="#" class="subscribe-form mt-4" method="post">
+                                <div class="form-group">
+                                    <input type="email" name="subscribe" placeholder="Ingresa tu correo" required="">
+                                    <button class="btn btn-style btn-primary">Subscribir</button>
+                                </div>
+                            </form>
+                            <ul class="footers-17_social">
+                                <h4 class="d-inline mr-4">Siguenos en :</h4>
+                                <li><a href="#url" class="twitter"><span class="fa fa-twitter"></span></a></li>
+                                <li><a href="#url" class="facebook"><span class="fa fa-facebook"></span></a></li>
+                                <li><a href="#url" class="linkedin"><span class="fa fa-linkedin"></span></a></li>
+                                <li><a href="#url" class="instagram"><span class="fa fa-instagram"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-grid grid-col-3 grids-content1 bottom-border">
+                        <div class="columns copyright-grid align-self">
+                            <p class="copy-footer-29">
+                                © 2021 Turismo Real. Todos los derechos reservados | Diseñado por <a href="#">B.F.J.M SA</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- move top -->
+        <button onclick="topFunction()" id="movetop" title="Go to top">
+            &#10548;
+        </button>
+        <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }</script>
+        <!-- /move top -->
+    </section>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="~/Content/assets/js/theme-change.js"></script><!-- theme switch js (light and dark)-->
+    <script>
+        $(document).ready(function () {
+            $('.owl-blog').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: false,
+                responsiveClass: true,
+                autoplay: false,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    480: {
+                        items: 1,
+                        nav: true
+                    },
+                    700: {
+                        items: 1,
+                        nav: true
+                    },
+                    1090: {
+                        items: 1,
+                        nav: true
+                    }
+                }
+            })
+        })</script>
+    <!-- //script for blog post slider -->
+    <!-- script for tesimonials carousel slider -->
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo1").owlCarousel({
+                loop: true,
+                nav: false,
+                margin: 50,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    736: {
+                        items: 1,
+                        nav: false
+                    }
+                }
+            })
+        })</script>
+
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+            $('.popup-with-move-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-slide-bottom'
+            });
+        });</script>
+
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });</script>
+    <!-- disable body scroll which navbar is in active -->
+    <!-- MENU-JS -->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });</script>
+
+
+
+
+</body>
+<!--Modal Login-->
+<div class="modal fade modal-registro-login " id="ModalRegistroLogin" tabindex="-1" role="dialog" aria-labelledby="ModalRegistroLoginUp" aria-hidden="true">
+    <div class="login-pop-form modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modallogin" id="ModalRegistroLoginUp">
+
+            <ul class="nav nav-pills nav-justified nav-login-bss">
+                <li class="nav-item">
+                    <a class="nav-link btn-lg active" data-toggle="pill" href="#iniciosesion">Inicia Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-lg" data-toggle="pill" href="#registrar">Regístrate</a>
+                </li>
+            </ul>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="tab-content">
+                            <div class="tab-pane container active" id="iniciosesion">
+                                <div class="login-form">
+                                    <form onsubmit="return false;">
+
+                                        <div class="form-group">
+                                            <label>Ingresa Tu Correo</label>
+                                            
+                                            <div class="input-with-icon">
+                                                <input id="idCorreo" type="text" class="form-control" placeholder="Correo">
+                                                <span class="ti-email"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <div class="input-with-icon">
+                                                <input id="idContrasena" type="password" class="form-control" placeholder="*******">
+                                                <i class="ti-unlock"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-center">
+                                            <button type="submit" onclick="wt.login.LoginUsuario();" class="btn btn-style btn-primary">Iniciar Sesión</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                                <div class="text-center">
+                                    <a href="@Url.Action("Recuperar","Home")">Recuperar Contraseña</a>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane container fade" id="registrar">
+                                <div class="registrarse-form">
+                                    <form id="register" onsubmit="return false;">
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="nombres" type="text" class="form-control" placeholder="Nombres" required>
+                                                        <i class="ti-user"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="apellidos" type="text" class="form-control" placeholder="Apellidos" required>
+                                                        <i class="ti-user"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="edad" type="text" class="form-control" placeholder="Edad" required>
+                                                        <i class="ti-user"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="rut" type="text" class="form-control" placeholder="Rut" required minlenght="10" maxlength="10" onkeyup="wt.FormatRut(this);">
+                                                        <i class="ti-id-badge"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6">
+
+                                                <div class="form-group input-group mb-3">
+                                                    <span class="input-group-prepend">
+                                                        <div class="input-group-text "><i class="ti-user"></i></div>
+                                                    </span>
+
+
+                                                    <select id="idGenero" class="form-control" required>
+                                                        <option value="">Género</option>
+                                                        <option value="1">M</option>
+                                                        <option value="2">F</option>
+
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+
+                                                <div class="form-group input-group mb-3">
+                                                    <span class="input-group-prepend">
+                                                        <div class="input-group-text "><i class="ti-user"></i></div>
+                                                    </span>
+
+
+                                                    <select id="idComuna" class="form-control" required>
+                                                        <option value="">Seleccionar Comuna</option>
+                                                        <option value="1">Santiago</option>
+                                                        <option value="2">Renca</option>
+
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6">
+
+                                                <div class="form-group input-group mb-3">
+                                                    <span class="input-group-prepend">
+                                                        <div class="input-group-text "><i class="ti-user"></i></div>
+                                                    </span>
+
+
+                                                    <select id="idRegion" class="form-control" required>
+                                                        <option value="">Seleccionar Region</option>
+                                                        <option value="1">Metropolitana</option>
+                                                        <option value="2">Renca</option>
+
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        </div>                                      
+
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="Direccion" type="text" class="form-control" placeholder="Dirección" required>
+                                                        <i class="ti-direction"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="correo" type="email" class="form-control" placeholder="Correo" required>
+                                                        <i class="ti-email"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            
+
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="celular" type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="912345678" maxlength="9" required>
+                                                        <i class="lni-phone-handset"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="contrasena" name="contrasena" type="password" class="form-control" placeholder="Contraseña" minlength="6" required>
+                                                        <i class="ti-unlock"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="input-with-icon">
+                                                        <input id="contrasena2" name="contrasena2" type="password" class="form-control" placeholder="Confirmar Contraseña" minlength="6" required>
+                                                        <i class="ti-unlock"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-center">
+                                            <button type="submit" class="btn btn-style btn-primary " id="btnRegistrar" onclick="wt.registrar.RegistrarUsuario();">Registrar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
